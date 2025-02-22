@@ -6,15 +6,13 @@
 
 This endpoint registers a new user. It creates a user record and returns a JSON Web Token along with the user data.
 
-### Request Body
-
-### Headers
+### Login Request Headers
 
 The request must include the following headers:
 
 - `Content-Type: application/json`
 
-### Request Body
+### Login Request Body
 
 The endpoint expects a JSON object with the following structure:
 
@@ -24,20 +22,20 @@ The endpoint expects a JSON object with the following structure:
 - `email` (string, required): Must be a valid email and at least 6 characters.
 - `password` (string, required): Must be at least 6 characters.
 
-### Example
+### Register Example
 
 ```json
 {
-    "fullname": {
-        "firstname": "John",
-        "lastname": "Doe"
-    },
-    "email": "john.doe@example.com",
-    "password": "secret123"
+        "fullname": {
+                "firstname": "John",
+                "lastname": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "password": "secret123"
 }
 ```
 
-### Responses
+### Login Responses
 
 #### 201 Created
 
@@ -47,16 +45,85 @@ The endpoint expects a JSON object with the following structure:
 
 ```json
 {
-    "token": "jwt-token-string",
-    "user": {
-        "_id": "userId",
-        "fullname": {
-            "firstname": "John",
-            "lastname": "Doe"
-        },
+        "token": "jwt-token-string",
+        "user": {
+                "_id": "userId",
+                "fullname": {
+                        "firstname": "John",
+                        "lastname": "Doe"
+                },
+                "email": "john.doe@example.com",
+                "socketid": null
+        }
+}
+```
+
+#### 400 Bad Request - Validation Error
+
+**Description:** Validation error. The response contains details of the validation errors.
+
+**Response Body:**
+
+```json
+{
+        "errors": [
+                {
+                        "msg": "Email is not valid",
+                        "param": "email",
+                        "location": "body"
+                }
+        ]
+}
+```
+
+## POST /users/login
+
+### Login Description
+
+This endpoint logs in an existing user. It validates the user's credentials and returns a JSON Web Token along with the user data.
+
+### Request Headers
+
+The request must include the following headers:
+
+- `Content-Type: application/json`
+
+### Request Body
+
+The endpoint expects a JSON object with the following structure:
+
+- `email` (string, required): Must be a valid email.
+- `password` (string, required): Must be at least 6 characters.
+
+### Example
+
+```json
+{
         "email": "john.doe@example.com",
-        "socketid": null
-    }
+        "password": "secret123"
+}
+```
+
+### Responses
+
+#### 200 OK
+
+**Description:** User is successfully logged in.
+
+**Response Body:**
+
+```json
+{
+        "token": "jwt-token-string",
+        "user": {
+                "_id": "userId",
+                "fullname": {
+                        "firstname": "John",
+                        "lastname": "Doe"
+                },
+                "email": "john.doe@example.com",
+                "socketid": null
+        }
 }
 ```
 
@@ -68,12 +135,24 @@ The endpoint expects a JSON object with the following structure:
 
 ```json
 {
-    "errors": [
-        {
-            "msg": "Email is not valid",
-            "param": "email",
-            "location": "body"
-        }
-    ]
+        "errors": [
+                {
+                        "msg": "Email is not valid",
+                        "param": "email",
+                        "location": "body"
+                }
+        ]
+}
+```
+
+#### 401 Unauthorized
+
+**Description:** Invalid email or password.
+
+**Response Body:**
+
+```json
+{
+        "message": "Invalid email or password"
 }
 ```
