@@ -95,7 +95,7 @@ The endpoint expects a JSON object with the following structure:
 - `email` (string, required): Must be a valid email.
 - `password` (string, required): Must be at least 6 characters.
 
-### Example
+### Profile Request Example
 
 ```json
 {
@@ -154,5 +154,113 @@ The endpoint expects a JSON object with the following structure:
 ```json
 {
         "message": "Invalid email or password"
+}
+```
+
+## GET /users/profile
+
+### Profile Retrieval Description
+
+This endpoint retrieves the profile of the authenticated user.
+
+### Profile Request Headers
+
+The request must include the following headers:
+
+- `Authorization: Bearer <token>`
+
+### Profile Example
+
+```json
+{
+        "Authorization": "Bearer jwt-token-string"
+}
+```
+
+### Profile Responses
+
+#### 200 OK - Profile Retrieved
+
+**Description:** User profile is successfully retrieved.
+
+**Response Body:**
+
+```json
+{
+        "_id": "userId",
+        "fullname": {
+                "firstname": "John",
+                "lastname": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "socketid": null
+}
+```
+
+#### 401 Unauthorized - Profile Retrieval
+
+**Description:** Invalid or missing token.
+
+**Response Body:**
+
+```json
+{
+        "message": "Invalid or missing token"
+}
+```
+
+## POST /users/logout
+
+### Logout Description
+
+This endpoint logs out the authenticated user.
+
+### Logout Request Headers
+
+The request must include the following headers:
+
+- `Authorization: Bearer <token>`
+
+### Logout Example
+
+```json
+{
+        "Authorization": "Bearer jwt-token-string"
+}
+```
+
+### Logout Responses
+
+#### 200 OK - Logout Successful
+
+**Description:** User is successfully logged out.
+
+**Response Body:**
+
+```json
+{
+        "message": "User successfully logged out"
+}
+```
+
+#### 401 Unauthorized - Logout
+
+**Description:** Invalid or missing token.
+
+**Response Body:**
+
+```json
+{
+        "message": "Invalid or missing token"
+}
+```
+
+**Description:** Invalid or missing token.
+
+**Response Body:**
+
+```json
+{
+        "message": "Invalid or missing token"
 }
 ```
