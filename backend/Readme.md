@@ -255,6 +255,62 @@ The request must include the following headers:
 }
 ```
 
+## POST /captain/register
+
+### Captain Registration Description
+
+This endpoint registers a new captain. It creates a captain record and returns the captain data.
+
+### Captain Registration Request Headers
+
+The request must include the following headers:
+
+- `Content-Type: application/json`
+
+### Captain Registration Request Body
+
+The endpoint expects a JSON object with the following structure:
+
+- `fullname`: An object containing:
+  - `firstname` (string, required): Must be at least 3 characters.
+  - `lastname` (string, optional)
+- `email` (string, required): Must be a valid email.
+- `password` (string, required): Must be at least 6 characters.
+- `vehicle`: An object containing:
+  - `color` (string, required): Must be at least 3 characters.
+  - `plate` (string, required): Must be at least 3 characters.
+  - `capacity` (number, required): Must be 1 or more.
+  - `vehicleType` (string, required): Must be one of 'car', 'motorcycle', or 'auto'.
+
+### Captain Registration Example
+
+```json
+{
+        "fullname": {
+                "firstname": "John",
+                "lastname": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "password": "secret123",
+        "vehicle": {
+                "color": "red",
+                "plate": "ABC123",
+                "capacity": 4,
+                "vehicleType": "car"
+        }
+}
+```
+
+**Description:** Invalid or missing token.
+
+**Response Body:**
+
+```json
+{
+        "message": "Invalid or missing token"
+}
+```
+
 **Description:** Invalid or missing token.
 
 **Response Body:**
