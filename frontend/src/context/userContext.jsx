@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
 import { createContext, useState } from "react";
@@ -17,7 +18,7 @@ const UserContext = ({children}) =>{
 
     return(
         <div>
-            <UserDataContext.Provider value={[user, setUser]}>
+            <UserDataContext.Provider value={{user, setUser}}>
                 {children}
             </UserDataContext.Provider>
         </div>
